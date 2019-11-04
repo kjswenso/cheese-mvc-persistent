@@ -5,8 +5,10 @@
 
     <h1 th:text="${title}">Default Title</h1>
 
+    <p th:unless="${category} and ${category.size()}">no categories :(</p>
+
     <ul th:each="name : ${category}">
-        <li th:text="${name}"></li>
+        <li th:text="${name.name}"></li>
     </ul>
 
     <a href="/category/add">Add Category</a>

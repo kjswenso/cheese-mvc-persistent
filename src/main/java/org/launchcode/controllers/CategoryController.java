@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
@@ -20,13 +21,13 @@ public class CategoryController {
 
     @RequestMapping(value = "")
     public String index(Model model) {
-        model.addAttribute("cheeses", categoryDao.findAll());
+        model.addAttribute("category", categoryDao.findAll());
         model.addAttribute("title", "My Cheeses Categories");
 
         return "category/index";
     }
 
-    @RequestMapping(value = "/add")
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new Category());
         model.addAttribute("title", "Add Category");
@@ -34,7 +35,7 @@ public class CategoryController {
         return "category/add";
     }
 
-    @RequestMapping(value = "add")
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(Model model,
                       @ModelAttribute @Valid Category category, Errors errors) {
         if (errors.hasErrors()){
@@ -42,7 +43,6 @@ public class CategoryController {
         }
 
         categoryDao.save(category);
-
         return "redirect:";
     }
 }
